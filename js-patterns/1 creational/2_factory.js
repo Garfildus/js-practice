@@ -1,0 +1,53 @@
+class SimpleMebmership{
+    constructor(name) {
+        this.name = name
+        this.cost = 50
+    }
+}
+
+class StandardMebmership{
+    constructor(name) {
+        this.name = name
+        this.cost = 150
+    }
+}
+
+class PremiumMebmership{
+    constructor(name) {
+        this.name = name
+        this.cost = 500
+    }
+}
+
+class MemberFactory{
+    static list ={
+        simple:SimpleMebmership,
+        standard:StandardMebmership,
+        premium:PremiumMebmership
+    }
+
+    create(name, type ='simple'){
+        const Membership = MemberFactory.list[type] || MemberFactory.list.simple
+        const member = new Membership(name)
+        member.type = type
+        member.define = function () {
+            console.log(`${this.name } (${this.type}): ${this.cost}`)
+        }
+        return member
+    }
+}
+
+const  factory = new MemberFactory()
+
+const members = [
+    factory.create('Vlad', 'simple'),
+    factory.create('Elena', 'premium'),
+    factory.create('Vasilisa','standard'),
+    factory.create('Ivan', 'premium'),
+    factory.create('Petr'),
+]
+
+members.forEach(m=>{
+    m.define()
+})
+
